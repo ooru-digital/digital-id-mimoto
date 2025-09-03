@@ -1,6 +1,6 @@
 gitRepo:
-  uri: https://github.com/mosip/inji-config
-  version: v0.7.0
+  uri: https://github.com/ooru-digital/inji-config
+  version: release-0.8.x
   ## Folders within the base repo where properties may be found.
   searchFolders: ""
   private: false
@@ -8,119 +8,232 @@ gitRepo:
   username: ""
   token: ""
 
+
 envVariables:
   - name: SPRING_CLOUD_CONFIG_SERVER_OVERRIDES_MOSIP_API_PUBLIC_HOST
     valueFrom:
       configMapKeyRef:
-        name: global
-        key: mosip-api-host
+        name: inji-stack-config
+        key: api-host
     enabled: true
+
+
+- name: SPRING_CLOUD_CONFIG_SERVER_OVERRIDES_MOSIP_INJIWEB_HOST
+  valueFrom:
+    configMapKeyRef:
+      key: mosip-injiweb-host
+      name: global
+
+
+- name: SPRING_CLOUD_CONFIG_SERVER_OVERRIDES_MOSIP_ESIGNET_HOST
+  valueFrom:
+    configMapKeyRef:
+      key: mosip-esignet-host
+      name: global
+
+
+- name: SPRING_CLOUD_CONFIG_SERVER_OVERRIDES_INJIWEB_HOST
+  valueFrom:
+    configMapKeyRef:
+      key: injiweb-host
+      name: inji-stack-config
+
+
+- name: SPRING_CLOUD_CONFIG_SERVER_OVERRIDES_REDIS_PASSWORD
+  valueFrom:
+    secretKeyRef:
+      key: redis-password
+      name: redis
+
+
+- name: SPRING_CLOUD_CONFIG_SERVER_GIT_PASSWORD
+  valueFrom:
+    secretKeyRef:
+      key: github-token
+      name: config-server
+
+
+- name: SPRING_CLOUD_CONFIG_SERVER_OVERRIDES_MOSIP_API_MOCKIDENTITYSYSTEM_HOST
+  valueFrom:
+    configMapKeyRef:
+      key: mosip-api-mockidentitysystem-host
+      name: inji-stack-config
+
+
+- name: SPRING_CLOUD_CONFIG_SERVER_OVERRIDES_MIMOTO_WALLET_BINDING_PARTNER_API_KEY
+  valueFrom:
+    secretKeyRef:
+      key: mimoto-wallet-binding-partner-api-key
+      name: mimoto-wallet-binding-partner-api-key
+
+
+- name: SPRING_CLOUD_CONFIG_SERVER_OVERRIDES_MIMOTO_OIDC_PARTNER_CLIENTID
+  valueFrom:
+    secretKeyRef:
+      key: mimoto-oidc-partner-clientid
+      name: mimoto-oidc-partner-clientid
+
+
+- name: SPRING_CLOUD_CONFIG_SERVER_OVERRIDES_MIMOTO_OIDC_KEYSTORE_PASSWORD
+  valueFrom:
+    secretKeyRef:
+      key: mimoto-oidc-keystore-password
+      name: mimoto-oidc-keystore-password
+
+
+- name: SPRING_CLOUD_CONFIG_SERVER_OVERRIDES_SOFTHSM_CERTIFY_SECURITY_PIN
+  valueFrom:
+    secretKeyRef:
+      key: security-pin
+      name: softhsm-certify
+
 
   - name: SPRING_CLOUD_CONFIG_SERVER_OVERRIDES_MOSIP_API_INTERNAL_HOST
     valueFrom:
       configMapKeyRef:
-        name: global
-        key: mosip-api-internal-host
+        name: inji-stack-config
+        key: api-internal-host
     enabled: true
+
 
   - name: SPRING_CLOUD_CONFIG_SERVER_OVERRIDES_MOSIP_PARTNER_CRYPTO_P12_PASSWORD
     valueFrom:
       secretKeyRef:
         key: mosip-partner-crypto-p12-password
         name: conf-secrets-various
-    enabled: true
+    enabled: false
+
 
   - name: SPRING_CLOUD_CONFIG_SERVER_OVERRIDES_MPARTNER_DEFAULT_MOBILE_SECRET
     valueFrom:
       secretKeyRef:
         key: mpartner_default_mobile_secret
         name: keycloak-client-secrets
-    enabled: true
+    enabled: false
+
 
   - name: SPRING_CLOUD_CONFIG_SERVER_OVERRIDES_KEYCLOAK_INTERNAL_URL
     valueFrom:
       configMapKeyRef:
         name: keycloak-host
         key: keycloak-internal-url
-    enabled: true
+    enabled: false
+
 
   - name: SPRING_CLOUD_CONFIG_SERVER_OVERRIDES_KEYCLOAK_EXTERNAL_URL
     valueFrom:
       configMapKeyRef:
         name: keycloak-host
         key: keycloak-external-url
-    enabled: true
+    enabled: false
+
 
   - name: SPRING_CLOUD_CONFIG_SERVER_OVERRIDES_KEYCLOAK_INTERNAL_HOST
     valueFrom:
       configMapKeyRef:
         name: keycloak-host
         key: keycloak-internal-host
-    enabled: true
+    enabled: false
+
 
   - name: SPRING_CLOUD_CONFIG_SERVER_OVERRIDES_KEYCLOAK_EXTERNAL_HOST
     valueFrom:
       configMapKeyRef:
         name: keycloak-host
         key: keycloak-external-host
-    enabled: true
+    enabled: false
+
 
   - name: SPRING_CLOUD_CONFIG_SERVER_OVERRIDES_DB_DBUSER_PASSWORD
     valueFrom:
       secretKeyRef:
         name: db-common-secrets
         key: db-dbuser-password
-    enabled: true
+    enabled: false
+
 
   - name: SPRING_CLOUD_CONFIG_SERVER_OVERRIDES_S3_ACCESSKEY
     valueFrom:
       configMapKeyRef:
         name: s3
         key: s3-user-key
-    enabled: true
+    enabled: false
+
 
   - name: SPRING_CLOUD_CONFIG_SERVER_OVERRIDES_S3_REGION
     valueFrom:
       configMapKeyRef:
         name: s3
         key: s3-region
-    enabled: true
+    enabled: false
+
 
   - name: SPRING_CLOUD_CONFIG_SERVER_OVERRIDES_S3_SECRETKEY
     valueFrom:
       secretKeyRef:
         name: s3
         key: s3-user-secret
-    enabled: true
+    enabled: false
+
 
   - name: SPRING_CLOUD_CONFIG_SERVER_OVERRIDES_MOSIP_ESIGNET_HOST
     valueFrom:
       configMapKeyRef:
-        key: mosip-esignet-host
-        name: global
+        key: esignet-host
+        name: inji-stack-config
+    enabled: false
+    
+  - name: SPRING_CLOUD_CONFIG_SERVER_OVERRIDES_MOSIP_ESIGNET_MOCK_HOST
+    valueFrom:
+      configMapKeyRef:
+        key: esignet-mock-host
+        name: inji-stack-config
     enabled: true
+
+
+  - name: SPRING_CLOUD_CONFIG_SERVER_OVERRIDES_MOSIPID_IDENTITY_ESIGNET_HOST
+    valueFrom:
+      configMapKeyRef:
+        key: mosipid-identity-esignet-host
+        name: inji-stack-config
+    enabled: false
+
 
   - name: SPRING_CLOUD_CONFIG_SERVER_OVERRIDES_MOSIP_ESIGNET_INSURANCE_HOST
     valueFrom:
       configMapKeyRef:
-        key: mosip-esignet-insurance-host
-        name: global
-    enabled: true
+        key: esignet-insurance-host
+        name: inji-stack-config
+    enabled: false  
+
 
   - name: SPRING_CLOUD_CONFIG_SERVER_OVERRIDES_MOSIP_INJI_DATASHARE_HOST
     valueFrom:
       configMapKeyRef:
-        key: mosip-inji-datashare-host
-        name: global
+        key: inji-datashare-host
+        name: inji-stack-config
+    enabled: false
+
 
   - name: SPRING_CLOUD_CONFIG_SERVER_OVERRIDES_MOSIP_INJIWEB_HOST
     valueFrom:
       configMapKeyRef:
-        key: mosip-injiweb-host
-        name: global
+        key: injiweb-host
+        name: inji-stack-config
+    enabled: true
+
 
   - name: SPRING_CLOUD_CONFIG_SERVER_OVERRIDES_MOSIP_INJIVERIFY_HOST
     valueFrom:
       configMapKeyRef:
-        key: mosip-injiverify-host
-        name: global
+        key: injiverify-host
+        name: inji-stack-config
+    enabled: true
+
+
+  - name: SPRING_CLOUD_CONFIG_SERVER_OVERRIDES_MOSIP_INJICERTIFY_HOST
+    valueFrom:
+      configMapKeyRef:
+        key: injicertify-host
+        name: inji-stack-config
+    enabled: true
